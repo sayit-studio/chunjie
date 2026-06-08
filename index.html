@@ -6,19 +6,20 @@
     <title>準備分享好康中...</title>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
+        /* 視覺定位：符合海報質感的載入畫面 */
         body {
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #F7F3EA;
+            background-color: #F7F3EA; /* 奶油米色 */
             font-family: sans-serif;
             flex-direction: column;
         }
         .loader {
             border: 4px solid #D1C7BD;
-            border-top: 4px solid #2C4A3E;
+            border-top: 4px solid #2C4A3E; /* 森林綠 */
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -61,7 +62,7 @@
                     return;
                 }
 
-                // 4. 喚起好友選擇器，發送輕量化被分享版 Flex Message
+                // 4. 喚起好友選擇器，發送帶有雙導流按鈕的完整 Flex Message
                 const res = await liff.shareTargetPicker([
                     {
                         "type": "flex",
@@ -94,10 +95,11 @@
                                     },
                                     {
                                         "type": "text",
-                                        "text": "好友推薦專屬好禮 🎁",
+                                        "text": "✨ 現場備有特色料理品嚐與限定好禮 🎁",
                                         "size": "sm",
                                         "color": "#9E7A44",
                                         "margin": "md",
+                                        "wrap": true,
                                         "weight": "bold"
                                     },
                                     {
@@ -113,14 +115,14 @@
                                         "contents": [
                                             {
                                                 "type": "text",
-                                                "text": "您的好友邀請您一同參與開幕慶",
+                                                "text": "您的好友邀請您一同參與開幕盛宴！",
                                                 "size": "sm",
                                                 "color": "#4A4A4A",
                                                 "wrap": true
                                             },
                                             {
                                                 "type": "text",
-                                                "text": "現在點擊下方按鈕加入好友",
+                                                "text": "👉 現在立刻加入LINE好友",
                                                 "size": "sm",
                                                 "color": "#4A4A4A",
                                                 "wrap": true
@@ -141,17 +143,28 @@
                                 "type": "box",
                                 "layout": "vertical",
                                 "backgroundColor": "#F7F3EA",
+                                "spacing": "md",
                                 "contents": [
                                     {
                                         "type": "button",
                                         "action": {
                                             "type": "uri",
-                                            "label": "👇 立即加入領取紅茶",
+                                            "label": "👇 立即領取紅茶",
                                             "uri": "https://line.me/R/ti/p/@709tvnka"
                                         },
                                         "style": "primary",
-                                        "color": "#E65C00"
-                                      }
+                                        "color": "#2C4A3E"
+                                    },
+                                    {
+                                        "type": "button",
+                                        "action": {
+                                            "type": "uri",
+                                            "label": "📢 立即分享給好友",
+                                            "uri": "https://liff.line.me/2010322763-J3zE6zwn"
+                                        },
+                                        "style": "primary",
+                                        "color": "#9E7A44"
+                                    }
                                 ]
                             }
                         }

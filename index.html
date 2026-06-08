@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>準備分享好康中...</title>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <style>
+        /* 品牌成長基礎建設：提升數位信任的載入畫面 */
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #F7F3EA; /* 呼應海報底色 */
+            font-family: sans-serif;
+            flex-direction: column;
+        }
+        .loader {
+            border: 4px solid #D1C7BD;
+            border-top: 4px solid #2C4A3E; /* 春秸館主視覺綠色 */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text {
+            color: #2C4A3E;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loader"></div>
+    <div class="loading-text">正在載入好友列表...</div>
+
+    <script>
+        // ⚠️ 請將下方的 'YOUR_LIFF_ID' 替換為您在 LINE Developers 後台取得的真實 ID
+        const myLiffId = "YOUR_LIFF_ID";
+
+        async function main() {
+            try {
+                // 1. 初始化 LIFF
+                await liff.init({ liffId: myLiffId });
+
+                // 2. 判斷是否登入，未登入則自動跳轉登入
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                    return;
+                }
+
+                // 3. 檢查環境是否支援 Share Target Picker
+                if (!liff.isApiAvailable('shareTargetPicker')) {
+                    alert("請在 LINE App 中開啟此連結以使用分享功能。");
+                    return;
+                }
+
+                // 4. 喚起好友選擇器，並帶入開幕慶 Flex Message
+                const res = await liff.shareTargetPicker([
+                    {
+                        "type": "flex",
+                        "altText": "🎉 春秸館開幕慶！不限金額消費送紅茶 🥤",
+                        "contents": {
+                            "type": "bubble",
+                            "size": "mega",
+                            "hero": {
+                                "type": "image",
+                                "url": "https://raw.githubusercontent.com/sayit-studio/chunjie/main/S__38322179.jpg",
+                                "size": "full",
+                                "aspectRatio": "3:4",
+                                "aspectMode": "cover",
+                                "action": {
+                                    "type": "uri",
+                                    "uri": "https://line.me/R/ti/p/@709tvnka"
+                                }
+                            },
+                            "body": {
+                                "type": "box",
+                                "layout": "vertical",
+                                "backgroundColor": "#F7F3EA",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "text": "🎉 春秸館開幕慶",
+                                        "weight": "bold",
+                                        "size": "xl",
+                                        "color": "#2C4A3E"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "好友推薦專屬好禮 🎁",
+                                        "size": "sm",
+                                        "color": "#9E7A44",
+                                        "margin": "md",
+                                        "weight": "bold"
+                                    },
+                                    {
+                                        "type": "separator",
+                                        "margin": "lg",
+                                        "color": "#D1C7BD"
+                                    },
+                                    {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "margin": "lg",
+                                        "spacing": "sm",
+                                        "contents": [
+                                            {
+                                                "type": "text",
+                                                "text": "您的好友邀請您一同參與開幕慶",
+                                                "size": "sm",
+                                                "color": "#4A4A4A",
+                                                "wrap": true
+                                            },
+                                            {
+                                                "type": "text",
+                                                "text": "現在點擊下方按鈕加入好友",
+                                                "size": "sm",
+                                                "color": "#4A4A4A",
+                                                "wrap": true
+                                            },
+                                            {
+                                                "type": "text",
+                                                "text": "🔥 不限金額消費就送紅茶一杯 🥤",
+                                                "size": "sm",
+                                                "color": "#2C4A3E",
+                                                "wrap": true,
+                                                "weight": "bold"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            "footer": {
+                                "type": "box",
+                                "layout": "vertical",
+                                "backgroundColor": "#F7F3EA",
+                                "contents": [
+                                    {
+                                        "type": "button",
+                                        "action": {
+                                            "type": "uri",
+                                            "label": "👇 立即加入領取紅茶",
+                                            "uri": "https://line.me/R/ti/p/@709tvnka"
+                                        },
+                                        "style": "primary",
+                                        "color": "#E65C00"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]);
+
+                // 5. 分享結束後的處理
+                if (res) {
+                    // 分享成功，自動關閉 LIFF 視窗，讓用戶回到原本的對話框
+                    liff.closeWindow();
+                } else {
+                    // 用戶取消分享，同樣關閉視窗
+                    liff.closeWindow();
+                }
+
+            } catch (err) {
+                console.error("LIFF 初始化或分享失敗:", err);
+            }
+        }
+
+        // 啟動主程式
+        main();
+    </script>
+</body>
+</html>

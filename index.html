@@ -6,7 +6,7 @@
     <title>準備分享好康中...</title>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
-        /* 品牌成長基礎建設：提升數位信任的載入畫面 */
+        /* 視覺定位：提升數位信任的載入畫面 */
         body {
             margin: 0;
             display: flex;
@@ -43,8 +43,8 @@
     <div class="loading-text">正在載入好友列表...</div>
 
     <script>
-        // ⚠️ 請將下方的 'YOUR_LIFF_ID' 替換為您在 LINE Developers 後台取得的真實 ID
-        const myLiffId = "YOUR_LIFF_ID";
+        // 核心業務：已自動寫入您的專屬 LIFF ID
+        const myLiffId = "2010322763-J3zE6zwn";
 
         async function main() {
             try {
@@ -162,10 +162,8 @@
 
                 // 5. 分享結束後的處理
                 if (res) {
-                    // 分享成功，自動關閉 LIFF 視窗，讓用戶回到原本的對話框
                     liff.closeWindow();
                 } else {
-                    // 用戶取消分享，同樣關閉視窗
                     liff.closeWindow();
                 }
 
@@ -174,7 +172,6 @@
             }
         }
 
-        // 啟動主程式
         main();
     </script>
 </body>
